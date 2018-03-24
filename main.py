@@ -19,12 +19,12 @@ def get_input(mode="train"):
     if mode == "train":
         dataset = np.zeros((NUM_TRAIN_IMAGES, 256, 512, 3))
         for i in range(1, 401):
-            img = Image.open("dataset/{}/{}.jpg".format(mode, i))
+            img = Image.open("dataset/{}/{}.png".format(mode, i))
             dataset[i - 1] = np.array(img)
     else:
         dataset = np.zeros((NUM_TEST_IMAGES, 256, 512, 3))
         for i in range(1, 101):
-            img = Image.open("dataset/{}/{}.jpg".format(mode, i))
+            img = Image.open("dataset/{}/{}.png".format(mode, i))
             dataset[i - 1] = np.array(img)
 
     # rescale [0, 255] to [-1, 1]
@@ -39,7 +39,7 @@ def save_sample_img(samples, step, mode="train"):
         # rescale [-1, 1] to [0, 255]
         img = 255 * (np.array(samples[i] + 1) / 2)
         im = Image.fromarray(np.uint8(img))
-        im.save("samples/{}/step{}_{}.jpg".format(mode, step, i))
+        im.save("samples/{}/step{}_{}.png".format(mode, step, i))
 
 
 def get_solver(learning_rate=2e-4, beta1=0.5):
@@ -181,7 +181,7 @@ if __name__ == "__main__":
     parser.add_argument("--l1_lambda", type=float, default=100.0, help="weight for L1 term")
 
     # export options
-    parser.add_argument("--output_filetype", default="jpg", choices=["png", "jpg"])
+    parser.add_argument("--output_filetype", default="png", choices=["png", "jpg"])
     a = parser.parse_args()
     print(a.mode)
 
